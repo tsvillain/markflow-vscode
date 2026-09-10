@@ -1,0 +1,119 @@
+{
+  "name": "markflow-vscode",
+  "displayName": "MarkFlow",
+  "description": "A distraction-free Markdown reading view, porting MarkFlow's reader mode into VS Code.",
+  "version": "0.1.0",
+  "license": "MIT",
+  "publisher": "tsvillain",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tsvillain/markflow-vscode.git"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Visualization",
+    "Other"
+  ],
+  "keywords": [
+    "markdown",
+    "preview",
+    "reader",
+    "mermaid"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "markflow.openReader",
+        "title": "MarkFlow: Open Reader",
+        "icon": "$(book)"
+      },
+      {
+        "command": "markflow.openReaderToSide",
+        "title": "MarkFlow: Open Reader to the Side",
+        "icon": "$(book)"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "markflow.openReaderToSide",
+          "when": "resourceLangId == markdown",
+          "group": "navigation"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "markflow.openReader",
+          "when": "resourceLangId == markdown"
+        },
+        {
+          "command": "markflow.openReaderToSide",
+          "when": "resourceLangId == markdown"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "MarkFlow",
+      "properties": {
+        "markflow.contentMaxWidth": {
+          "type": "number",
+          "default": 1000,
+          "minimum": 480,
+          "maximum": 2400,
+          "description": "Maximum width, in pixels, of the rendered document column."
+        },
+        "markflow.fontSize": {
+          "type": "number",
+          "default": 16,
+          "minimum": 10,
+          "maximum": 32,
+          "description": "Base font size, in pixels, for the reader."
+        },
+        "markflow.tocOpenByDefault": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the table-of-contents sidebar when the reader opens."
+        },
+        "markflow.theme": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "dark",
+            "light"
+          ],
+          "default": "auto",
+          "enumDescriptions": [
+            "Follow the active VS Code color theme.",
+            "Always use MarkFlow's dark theme.",
+            "Always use MarkFlow's light theme."
+          ],
+          "description": "Which reader theme to start with. The in-reader toggle overrides this for the current panel."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vendor": "node scripts/vendor.mjs",
+    "build": "npm run vendor && tsc -p ./",
+    "compile": "npm run build",
+    "watch": "tsc -watch -p ./",
+    "vscode:prepublish": "npm run build",
+    "test": "node --test test/*.test.js"
+  },
+  "devDependencies": {
+    "@fontsource/inter": "^5.0.0",
+    "@fontsource/jetbrains-mono": "^5.0.0",
+    "@fontsource/lora": "^5.0.0",
+    "@highlightjs/cdn-assets": "^11.12.0",
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "dompurify": "^3.0.6",
+    "marked": "^9.1.6",
+    "mermaid": "^10.9.0",
+    "typescript": "^5.4.0"
+  }
+}
